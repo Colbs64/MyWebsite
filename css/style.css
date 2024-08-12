@@ -7,7 +7,9 @@ h3 {
     padding-right: 10%;
 }
 
-/* both of these project classes align the text to the center of the screen */
+/* both of these project classes align the text to the center of the center of
+   the screen. I chose this over text-align because it looked better
+*/
 .project-text {
     padding-left: 25%;
     padding-right: 25%;
@@ -20,4 +22,12 @@ h3 {
 
 .red {
     color: red;
+}
+
+.imagebox {
+    padding-left: 25%;
+}
+
+.Project-IMG {
+    width: 25rem;
 }
