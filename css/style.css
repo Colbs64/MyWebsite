@@ -7,6 +7,7 @@ h3 {
     padding-right: 10%;
 }
 
+
 /* both of these project classes align the text to the center of the center of
    the screen. I chose this over text-align because it looked better
 */
@@ -34,4 +35,8 @@ h3 {
 
 .aboutMePhotos {
     width: 15rem;
+}
+
+.bold {
+    font-weight: bold;
 }
