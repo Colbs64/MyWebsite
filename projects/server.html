@@ -6,18 +6,31 @@
         <link rel="stylesheet" href="../css/style.css" />
     </head>
     <body>
+
         <title>server</title>
+
         <h3 class="project-title">Server setup as of August 24th, 2024</h3>
+
         <!--  Put pictures of the computer here -->
+
         <p class="project-text">
             I've wanted to make a server setup in the past, but now that I've got
-            an extra computer I can use, I just decided to go for it.
+            an extra computer I can use, I just decided to go for it. I had some initial
+            goals for this project, but on the way, I learned about Docker, docker-compose,
+            and Linux user and group permissions.
         </p>
+        <p class="project-text">
+            I decided to go with Debian, because it's more of a batteries included distro that
+            has a very easy setup process dedicated for an SSH server. Since I have two drives,
+            I edited the /etc/fstab file to include my hard drive on /home/colby/drive2. The OS
+            was installed on the SSD.
+        </p>
+
+        <!--section for my goals coming into this project -->
         <h3 class="project-title">Goals</h3>
+
         <ul class="project-text">
-            <li class="bold">
-                Docker
-            </li>
+            <li class="bold">Docker</li>
             <p>
                 Learning Docker wasn't my initial intent, but I wanted to find a way that
                 I can easily control the resources I can give each program. Docker was
@@ -30,30 +43,85 @@
                     target="_blank">
                     Principle of Least Privilage</a>.
             </p>
-            <li class="bold">
-                Jellyfin service
-            </li>
+            <li class="bold">Jellyfin</li>
             <p>
                 Jellyfin is an open-source alternative to Plex, I've been wanting to try it out to be able
                 to stream my movies on all my devices.
             </p>
-            <li class="bold">
-                Running game servers
-            </li>
+            <li class="bold">Running game servers</li>
             <p>
                 The 2 games I wanted to try out are Minecraft and Satisfactory. I've ran a Minecraft
                 server locally before, but I wanted to know what the performance would be like running
                 it virtualized in a docker container.
             </p>
         </ul>
+        <!--GOALS SECTION END -->
+
         <h3 class="project-title">Computer</h3>
         <p class="italic project-title project-text">
             <em>Pictures of the computer I used are at the top of the page.</em>
         </p>
-        <p class="project-text">
 
+        <p class="project-text bold">The computer specs are as follows:</p>
+
+            <ul class="project-text">
+                <li>MOBO: not sure</li>
+                <li>CPU: i5-4590</li>
+                <li>RAM: 16GB of DDR3</li>
+                <li>Storage:</li>
+                <ul>
+                    <li>256 GB SSD</li>
+                    <li>1 TB 5400RPM Hard Drive</li>
+                </ul>
+                <li>OS: Debian 12 SSH server headless</li>
+            </ul>
+
+        <p class="project-text">
+            This computer is just some random Dell bought off Ebay, I initially bought it to
+            throw a graphics card inside it as a gift for my brother, I think for around $100 at the time.
+            Now, he has my old build, so he let me have this back. The specs aren't incredible, but this is
+            perfect a small home server.
+        </p>
+
+        <!--DOCKER PORTION -->
+        <h3 class="project-title">Docker</h3>
+        <p class="project-text">
+            Since this was gonna be my server project, I wanted a way I can make this system more secure
+            and easier to manage. To make this system more secure, I used <em>'sudo useradd -m NAME'</em>
+            to create a new user with it's own home directory in /home/USERNAME. I then went
+            into /etc/passwd and change the last line of each of these docker users from /bin/bash to
+            /bin/nologin. This makes it so that a real user cannot login to these accounts, only programs
+            can use them to run processes, which is what I want.
+        </p>
+        <p class="project-text">
+            The reason I gave the users Home directories is so that they can access files that I provide.
+            I needed this for Jellyfin so that it can read my movies and for game services to have a place to
+            store settings and savefiles. I could've just added these folders into my home directory, but
+            I think having these seperate home directories makes it easier to sort and manage permissions.
+        </p>
+        <p class="project-text">
+            For the Docker containers, there ended up being very good pre-made containers on <a href="https://hub.docker.com" target="_blank">
+            docker hub.</a> I used 3 different containers for <a href="https://hub.docker.com/r/wolveix/satisfactory-server">Satisfactory</a>,
+            <a href="https://hub.docker.com/r/itzg/minecraft-server/">Minecraft,</a> and <a href="https://hub.docker.com/r/jellyfin/jellyfin">
+            Jellyfin</a>.
+        </p>
+        <!--DOCKER PORTION END -->
+
+        <!-- JELLYFIN PORTION -->
+        <h3 class="bold project-title">Jellyfin</h3>
+
+        <p class="project-text">
+            Jellyfin worked pretty seamlessly, all I had to do was define it's user in the docker-compose.yaml file with
+            <em>user: UID:GID</em>, tell it which folders my movies are stored in, and it mostly auto-detected everything.
+            Although, I did have to format all of these video names beforehand, I have a picture of what that looks like
 
         </p>
+        <img class="Project-IMGLARGER project-text" src="../IMG/File-format.png">
+        <p class="project-text">
+            I didn't limit any of the processing because of how weak my cpu is, it actually pins
+            all cores to 70%-95% usage when I stream video. But it does work at the very least.
+        </p>
+        <img class="Project-IMGLARGER project-text" src="../IMG/Processing-during-jelly.png">
     </body>
     <br>
     ----------
